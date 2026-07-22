@@ -1,6 +1,19 @@
+import 'package:basketapp/core/di/service_locator.dart';
+import 'package:basketapp/core/theme/app_theme.dart';
+import 'package:basketapp/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:basketapp/features/auth/presentation/bloc/auth_state.dart';
+import 'package:basketapp/features/auth/presentation/pages/login_page.dart';
+import 'package:basketapp/features/auth/presentation/pages/register_page.dart';
+import 'package:basketapp/features/auth/presentation/pages/splash_page.dart';
+import 'package:basketapp/features/home/presentation/pages/home_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await setupServiceLocator();
   runApp(const MyApp());
 }
 
@@ -9,56 +22,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+    return BlocProvider<AuthBloc>(
+      create: (context) => getIt<AuthBloc>(),
+      child: MaterialApp(
+        title: 'BasketApp',
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        home: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is AuthAuthenticated) {
+              return const HomePage();
+            } else if (state is AuthUnauthenticated) {
+              return const LoginPage();
+            }
+            return const SplashPage();
+          },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case '/login':
+              return MaterialPageRoute(builder: (_) => const LoginPage());
+            case '/register':
+              return MaterialPageRoute(builder: (_) => const RegisterPage());
+            case '/home':
+              return MaterialPageRoute(builder: (_) => const HomePage());
+            default:
+              return null;
+          }
+        },
       ),
     );
   }
