@@ -1,7 +1,6 @@
 import 'package:basketapp/core/di/service_locator.dart';
 import 'package:basketapp/core/theme/app_theme.dart';
 import 'package:basketapp/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:basketapp/features/auth/presentation/bloc/auth_state.dart';
 import 'package:basketapp/features/auth/presentation/pages/login_page.dart';
 import 'package:basketapp/features/auth/presentation/pages/register_page.dart';
 import 'package:basketapp/features/auth/presentation/pages/splash_page.dart';
@@ -28,16 +27,7 @@ class MyApp extends StatelessWidget {
         title: 'BasketApp',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        home: BlocBuilder<AuthBloc, AuthState>(
-          builder: (context, state) {
-            if (state is AuthAuthenticated) {
-              return const HomePage();
-            } else if (state is AuthUnauthenticated) {
-              return const LoginPage();
-            }
-            return const SplashPage();
-          },
-        ),
+        home: const SplashPage(),
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case '/login':

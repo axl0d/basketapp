@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:basketapp/core/di/service_locator.dart';
 import 'package:basketapp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:basketapp/features/auth/presentation/bloc/auth_event.dart';
@@ -8,6 +6,8 @@ import 'package:basketapp/features/products/presentation/bloc/products_bloc.dart
 import 'package:basketapp/features/products/presentation/bloc/products_event.dart';
 import 'package:basketapp/features/products/presentation/bloc/products_state.dart';
 import 'package:basketapp/features/products/presentation/widgets/product_card.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -71,17 +71,15 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.all(16),
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.65,
-                              crossAxisSpacing: 12,
-                              mainAxisSpacing: 12,
-                            ),
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.65,
+                                  crossAxisSpacing: 12,
+                                  mainAxisSpacing: 12,
+                                ),
                             itemCount: productsState.products.length,
-                            itemBuilder: (context, index) {
-                              return ProductCard(
-                                product: productsState.products[index],
-                              );
-                            },
+                            itemBuilder: (context, index) => ProductCard(
+                              product: productsState.products[index],
+                            ),
                           );
                         } else if (productsState is ProductsError) {
                           return Center(
@@ -112,9 +110,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           );
                         }
-                        return const Center(
-                          child: Text('Sin productos'),
-                        );
+                        return const Center(child: Text('Sin productos'));
                       },
                     ),
                   ),
@@ -136,9 +132,7 @@ class _HomePageState extends State<HomePage> {
               ],
             );
           }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );
