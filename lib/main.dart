@@ -25,18 +25,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AuthBloc>(
-          create: (context) => getIt<AuthBloc>(),
-        ),
-        BlocProvider<CartBloc>(
-          create: (context) => getIt<CartBloc>(),
-        ),
+        BlocProvider<AuthBloc>(create: (context) => getIt<AuthBloc>()),
+        BlocProvider<CartBloc>(create: (context) => getIt<CartBloc>()),
       ],
       child: MaterialApp(
         title: 'BasketApp',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         home: const SplashPage(),
+        debugShowCheckedModeBanner: false,
         onGenerateRoute: (settings) {
           switch (settings.name) {
             case '/login':

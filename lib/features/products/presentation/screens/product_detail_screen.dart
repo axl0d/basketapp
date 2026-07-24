@@ -136,7 +136,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                 // Categoría
                 Chip(
                   label: Text(widget.product.category),
-                  backgroundColor: Colors.deepPurple.withOpacity(0.2),
+                  backgroundColor: Colors.deepPurple.withValues(alpha: 0.2),
                   labelStyle: const TextStyle(color: Colors.deepPurple),
                 ),
                 const SizedBox(height: 16),
@@ -216,39 +216,35 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                 // Botón agregar al carrito
                 SizedBox(
                   width: double.infinity,
-                  child: BlocListener<CartBloc, dynamic>(
-                    listener: (context, state) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            '✓ ${widget.product.name} agregado al carrito',
-                          ),
-                          duration: const Duration(seconds: 2),
-                          backgroundColor: Colors.green,
-                        ),
-                      );
-                    },
-                    child: ElevatedButton(
-                      onPressed: widget.product.stock > 0
-                          ? () {
-                              context.read<CartBloc>().add(
-                                AddToCartEvent(widget.product),
-                              );
-                            }
-                          : null,
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        backgroundColor: Colors.deepPurple,
-                        disabledBackgroundColor: Colors.grey[400],
-                      ),
-                      child: Text(
-                        widget.product.stock > 0
-                            ? 'Agregar al Carrito'
-                            : 'Sin Stock',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  child: ElevatedButton(
+                    onPressed: widget.product.stock > 0
+                        ? () {
+                            context.read<CartBloc>().add(
+                              AddToCartEvent(widget.product),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '✓ ${widget.product.name} agregado al carrito',
+                                ),
+                                duration: const Duration(seconds: 2),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                          }
+                        : null,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      backgroundColor: Colors.deepPurple,
+                      disabledBackgroundColor: Colors.grey[400],
+                    ),
+                    child: Text(
+                      widget.product.stock > 0
+                          ? 'Agregar al Carrito'
+                          : 'Sin Stock',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

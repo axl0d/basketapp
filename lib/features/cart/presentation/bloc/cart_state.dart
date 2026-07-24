@@ -12,6 +12,10 @@ class CartInitial extends CartState {
   const CartInitial();
 }
 
+class CartLoading extends CartState {
+  const CartLoading();
+}
+
 class CartUpdated extends CartState {
   final List<CartItem> items;
   final int totalItems;
@@ -25,4 +29,13 @@ class CartUpdated extends CartState {
 
   @override
   List<Object?> get props => [items, totalItems, totalPrice];
+}
+
+class CartError extends CartState {
+  final String message;
+
+  const CartError(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }

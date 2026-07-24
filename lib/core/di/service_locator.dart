@@ -8,6 +8,13 @@ import 'package:basketapp/features/auth/domain/usecases/register_usecase.dart';
 import 'package:basketapp/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:basketapp/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:basketapp/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:basketapp/features/cart/data/repositories/cart_repository_impl.dart';
+import 'package:basketapp/features/cart/domain/repositories/cart_repository.dart';
+import 'package:basketapp/features/cart/domain/usecases/add_to_cart_usecase.dart';
+import 'package:basketapp/features/cart/domain/usecases/remove_from_cart_usecase.dart';
+import 'package:basketapp/features/cart/domain/usecases/update_quantity_usecase.dart';
+import 'package:basketapp/features/cart/domain/usecases/get_cart_items_usecase.dart';
+import 'package:basketapp/features/cart/domain/usecases/clear_cart_usecase.dart';
 import 'package:basketapp/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:basketapp/features/products/data/datasources/product_remote_data_source.dart';
 import 'package:basketapp/features/products/data/datasources/product_local_data_source.dart';
@@ -50,6 +57,9 @@ Future<void> setupServiceLocator() async {
       localDataSource: getIt<ProductLocalDataSource>(),
     ),
   );
+  getIt.registerSingleton<CartRepository>(
+    CartRepositoryImpl(),
+  );
 
   // Use Cases
   getIt.registerSingleton<LoginUseCase>(
@@ -73,6 +83,21 @@ Future<void> setupServiceLocator() async {
   getIt.registerSingleton<RateProductUseCase>(
     RateProductUseCase(getIt<ProductRepository>()),
   );
+  getIt.registerSingleton<AddToCartUseCase>(
+    AddToCartUseCase(getIt<CartRepository>()),
+  );
+  getIt.registerSingleton<RemoveFromCartUseCase>(
+    RemoveFromCartUseCase(getIt<CartRepository>()),
+  );
+  getIt.registerSingleton<UpdateQuantityUseCase>(
+    UpdateQuantityUseCase(getIt<CartRepository>()),
+  );
+  getIt.registerSingleton<GetCartItemsUseCase>(
+    GetCartItemsUseCase(getIt<CartRepository>()),
+  );
+  getIt.registerSingleton<ClearCartUseCase>(
+    ClearCartUseCase(getIt<CartRepository>()),
+  );
 
   // BLoCs
   getIt.registerSingleton<AuthBloc>(
@@ -95,6 +120,12 @@ Future<void> setupServiceLocator() async {
     ),
   );
   getIt.registerSingleton<CartBloc>(
-    CartBloc(),
+    CartBloc(
+      addToCartUseCase: getIt<AddToCartUseCase>(),
+      removeFromCartUseCase: getIt<RemoveFromCartUseCase>(),
+      updateQuantityUseCase: getIt<UpdateQuantityUseCase>(),
+      getCartItemsUseCase: getIt<GetCartItemsUseCase>(),
+      clearCartUseCase: getIt<ClearCartUseCase>(),
+    ),
   );
 }
