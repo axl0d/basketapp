@@ -3,17 +3,21 @@ import 'package:basketapp/features/products/domain/entities/product.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
+  final VoidCallback? onTap;
 
   const ProductCard({
     super.key,
     required this.product,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      child: Column(
+    return InkWell(
+      onTap: onTap,
+      child: Card(
+        elevation: 2,
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
@@ -92,6 +96,7 @@ class ProductCard extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }

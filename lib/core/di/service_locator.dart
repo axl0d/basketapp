@@ -8,11 +8,16 @@ import 'package:basketapp/features/auth/domain/usecases/register_usecase.dart';
 import 'package:basketapp/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:basketapp/features/auth/domain/usecases/get_current_user_usecase.dart';
 import 'package:basketapp/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:basketapp/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:basketapp/features/products/data/datasources/product_remote_data_source.dart';
+import 'package:basketapp/features/products/data/datasources/product_local_data_source.dart';
 import 'package:basketapp/features/products/data/repositories/product_repository_impl.dart';
 import 'package:basketapp/features/products/domain/repositories/product_repository.dart';
 import 'package:basketapp/features/products/domain/usecases/get_products_usecase.dart';
+import 'package:basketapp/features/products/domain/usecases/get_product_by_id_usecase.dart';
+import 'package:basketapp/features/products/domain/usecases/rate_product_usecase.dart';
 import 'package:basketapp/features/products/presentation/bloc/products_bloc.dart';
+import 'package:basketapp/features/products/presentation/bloc/product_detail_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -28,6 +33,9 @@ Future<void> setupServiceLocator() async {
   getIt.registerSingleton<ProductRemoteDataSource>(
     ProductRemoteDataSourceImpl(),
   );
+  getIt.registerSingleton<ProductLocalDataSource>(
+    ProductLocalDataSourceImpl(),
+  );
 
   // Repositories
   getIt.registerSingleton<AuthRepository>(
@@ -39,6 +47,7 @@ Future<void> setupServiceLocator() async {
   getIt.registerSingleton<ProductRepository>(
     ProductRepositoryImpl(
       remoteDataSource: getIt<ProductRemoteDataSource>(),
+      localDataSource: getIt<ProductLocalDataSource>(),
     ),
   );
 
@@ -58,6 +67,12 @@ Future<void> setupServiceLocator() async {
   getIt.registerSingleton<GetProductsUseCase>(
     GetProductsUseCase(getIt<ProductRepository>()),
   );
+  getIt.registerSingleton<GetProductByIdUseCase>(
+    GetProductByIdUseCase(getIt<ProductRepository>()),
+  );
+  getIt.registerSingleton<RateProductUseCase>(
+    RateProductUseCase(getIt<ProductRepository>()),
+  );
 
   // BLoCs
   getIt.registerSingleton<AuthBloc>(
@@ -72,5 +87,14 @@ Future<void> setupServiceLocator() async {
     ProductsBloc(
       getProductsUseCase: getIt<GetProductsUseCase>(),
     ),
+  );
+  getIt.registerSingleton<ProductDetailBloc>(
+    ProductDetailBloc(
+      getProductByIdUseCase: getIt<GetProductByIdUseCase>(),
+      rateProductUseCase: getIt<RateProductUseCase>(),
+    ),
+  );
+  getIt.registerSingleton<CartBloc>(
+    CartBloc(),
   );
 }

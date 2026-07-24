@@ -4,7 +4,9 @@ import 'package:basketapp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:basketapp/features/auth/presentation/pages/login_page.dart';
 import 'package:basketapp/features/auth/presentation/pages/register_page.dart';
 import 'package:basketapp/features/auth/presentation/pages/splash_page.dart';
+import 'package:basketapp/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:basketapp/features/home/presentation/pages/home_page.dart';
+import 'package:basketapp/features/products/presentation/screens/product_detail_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,8 +23,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>(
-      create: (context) => getIt<AuthBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => getIt<AuthBloc>(),
+        ),
+        BlocProvider<CartBloc>(
+          create: (context) => getIt<CartBloc>(),
+        ),
+      ],
       child: MaterialApp(
         title: 'BasketApp',
         theme: AppTheme.lightTheme,
@@ -36,6 +45,11 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => const RegisterPage());
             case '/home':
               return MaterialPageRoute(builder: (_) => const HomePage());
+            case '/product':
+              final productId = settings.arguments as String;
+              return MaterialPageRoute(
+                builder: (_) => ProductDetailScreen(productId: productId),
+              );
             default:
               return null;
           }

@@ -27,3 +27,7 @@ class NetworkFailure extends Failure {
 class LocalStorageFailure extends Failure {
   const LocalStorageFailure(String message) : super(message);
 }
+
+class ProductFailure extends Failure {
+  const ProductFailure(String message) : super(message);
+}

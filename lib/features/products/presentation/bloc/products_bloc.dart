@@ -6,8 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   final GetProductsUseCase getProductsUseCase;
 
-  ProductsBloc({required this.getProductsUseCase})
-    : super(const ProductsInitial()) {
+  ProductsBloc({
+    required this.getProductsUseCase,
+  }) : super(const ProductsInitial()) {
     on<FetchProductsEvent>(_onFetchProducts);
   }
 
@@ -16,11 +17,10 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     Emitter<ProductsState> emit,
   ) async {
     emit(const ProductsLoading());
-    try {
-      final products = await getProductsUseCase();
-      emit(ProductsLoaded(products));
-    } catch (e) {
-      emit(ProductsError('Error al cargar productos: ${e.toString()}'));
-    }
+    final result = await getProductsUseCase();
+    result.fold(
+      (failure) => emit(ProductsError(failure.message)),
+      (products) => emit(ProductsLoaded(products)),
+    );
   }
 }

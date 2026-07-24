@@ -77,9 +77,19 @@ class _HomePageState extends State<HomePage> {
                                   mainAxisSpacing: 12,
                                 ),
                             itemCount: productsState.products.length,
-                            itemBuilder: (context, index) => ProductCard(
-                              product: productsState.products[index],
-                            ),
+                            itemBuilder: (context, index) {
+                              final product = productsState.products[index];
+                              return ProductCard(
+                                product: product,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/product',
+                                    arguments: product.id,
+                                  );
+                                },
+                              );
+                            },
                           );
                         } else if (productsState is ProductsError) {
                           return Center(

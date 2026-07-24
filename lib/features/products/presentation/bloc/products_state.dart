@@ -5,7 +5,7 @@ abstract class ProductsState extends Equatable {
   const ProductsState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class ProductsInitial extends ProductsState {
@@ -22,7 +22,7 @@ class ProductsLoaded extends ProductsState {
   const ProductsLoaded(this.products);
 
   @override
-  List<Object> get props => [products];
+  List<Object?> get props => [products];
 }
 
 class ProductsError extends ProductsState {
@@ -31,5 +31,5 @@ class ProductsError extends ProductsState {
   const ProductsError(this.message);
 
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [message];
 }
