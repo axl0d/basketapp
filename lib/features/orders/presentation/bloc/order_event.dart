@@ -19,10 +19,6 @@ class CreateOrderEvent extends OrderEvent {
   List<Object?> get props => [items, totalPrice];
 }
 
-class GetOrdersEvent extends OrderEvent {
-  const GetOrdersEvent();
-}
-
 class GetOrderByIdEvent extends OrderEvent {
   final String orderId;
 

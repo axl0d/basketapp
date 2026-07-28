@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:basketapp/features/orders/domain/usecases/create_order_usecase.dart';
-import 'package:basketapp/features/orders/domain/usecases/get_orders_usecase.dart';
 import 'package:basketapp/features/orders/domain/usecases/get_order_by_id_usecase.dart';
 import 'package:basketapp/features/orders/domain/usecases/update_order_status_usecase.dart';
 import 'package:basketapp/features/orders/domain/usecases/cancel_order_usecase.dart';
@@ -9,20 +8,17 @@ import 'package:basketapp/features/orders/presentation/bloc/order_state.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
   final CreateOrderUseCase createOrderUseCase;
-  final GetOrdersUseCase getOrdersUseCase;
   final GetOrderByIdUseCase getOrderByIdUseCase;
   final UpdateOrderStatusUseCase updateOrderStatusUseCase;
   final CancelOrderUseCase cancelOrderUseCase;
 
   OrderBloc({
     required this.createOrderUseCase,
-    required this.getOrdersUseCase,
     required this.getOrderByIdUseCase,
     required this.updateOrderStatusUseCase,
     required this.cancelOrderUseCase,
   }) : super(const OrderInitial()) {
     on<CreateOrderEvent>(_onCreateOrder);
-    on<GetOrdersEvent>(_onGetOrders);
     on<GetOrderByIdEvent>(_onGetOrderById);
     on<UpdateOrderStatusEvent>(_onUpdateOrderStatus);
     on<CancelOrderEvent>(_onCancelOrder);
@@ -37,18 +33,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     result.fold(
       (failure) => emit(OrderError(failure.message)),
       (order) => emit(OrderCreated(order)),
-    );
-  }
-
-  Future<void> _onGetOrders(
-    GetOrdersEvent event,
-    Emitter<OrderState> emit,
-  ) async {
-    emit(const OrderLoading());
-    final result = await getOrdersUseCase();
-    result.fold(
-      (failure) => emit(OrderError(failure.message)),
-      (orders) => emit(OrdersLoaded(orders)),
     );
   }
 

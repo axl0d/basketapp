@@ -25,15 +25,6 @@ class OrderCreated extends OrderState {
   List<Object?> get props => [order];
 }
 
-class OrdersLoaded extends OrderState {
-  final List<Order> orders;
-
-  const OrdersLoaded(this.orders);
-
-  @override
-  List<Object?> get props => [orders];
-}
-
 class OrderDetailLoaded extends OrderState {
   final Order order;
 

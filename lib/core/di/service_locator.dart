@@ -22,6 +22,7 @@ import 'package:basketapp/features/orders/domain/usecases/get_order_by_id_usecas
 import 'package:basketapp/features/orders/domain/usecases/get_orders_usecase.dart';
 import 'package:basketapp/features/orders/domain/usecases/update_order_status_usecase.dart';
 import 'package:basketapp/features/orders/presentation/bloc/order_bloc.dart';
+import 'package:basketapp/features/orders/presentation/bloc/order_list_bloc.dart';
 import 'package:basketapp/features/products/data/datasources/product_local_data_source.dart';
 import 'package:basketapp/features/products/data/datasources/product_remote_data_source.dart';
 import 'package:basketapp/features/products/data/repositories/product_repository_impl.dart';
@@ -147,10 +148,12 @@ Future<void> setupServiceLocator() async {
   getIt.registerSingleton<OrderBloc>(
     OrderBloc(
       createOrderUseCase: getIt<CreateOrderUseCase>(),
-      getOrdersUseCase: getIt<GetOrdersUseCase>(),
       getOrderByIdUseCase: getIt<GetOrderByIdUseCase>(),
       updateOrderStatusUseCase: getIt<UpdateOrderStatusUseCase>(),
       cancelOrderUseCase: getIt<CancelOrderUseCase>(),
     ),
+  );
+  getIt.registerSingleton<OrderListBloc>(
+    OrderListBloc(getOrdersUseCase: getIt<GetOrdersUseCase>()),
   );
 }

@@ -1,10 +1,12 @@
 import 'package:basketapp/core/di/service_locator.dart';
-import 'package:basketapp/features/orders/presentation/bloc/order_bloc.dart';
-import 'package:basketapp/features/orders/presentation/bloc/order_event.dart';
-import 'package:basketapp/features/orders/presentation/bloc/order_state.dart';
+import 'package:basketapp/features/orders/presentation/bloc/order_list_bloc.dart';
+import 'package:basketapp/features/orders/presentation/bloc/order_list_event.dart';
+import 'package:basketapp/features/orders/presentation/bloc/order_list_state.dart';
 import 'package:basketapp/features/orders/presentation/screens/order_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../domain/entities/order.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
@@ -14,27 +16,27 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  late OrderBloc _orderBloc;
+  late OrderListBloc _orderListBloc;
 
   @override
   void initState() {
     super.initState();
-    _orderBloc = getIt<OrderBloc>();
-    _orderBloc.add(const GetOrdersEvent());
+    _orderListBloc = getIt<OrderListBloc>();
+    _orderListBloc.add(const FetchOrderListEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Mis Órdenes'), elevation: 0),
-      body: BlocBuilder<OrderBloc, OrderState>(
-        bloc: _orderBloc,
+      body: BlocBuilder<OrderListBloc, OrderListState>(
+        bloc: _orderListBloc,
         builder: (context, state) {
-          if (state is OrderLoading) {
+          if (state is OrderListLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (state is OrderError) {
+          if (state is OrderListError) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -51,37 +53,37 @@ class _OrdersScreenState extends State<OrdersScreen> {
             );
           }
 
-          if (state is OrdersLoaded) {
-            if (state.orders.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.shopping_bag_outlined,
-                      size: 64,
-                      color: Colors.grey[400],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'No tienes órdenes',
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Completa tu primera compra',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
-                    ),
-                  ],
-                ),
-              );
-            }
+          if (state is OrderListEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.shopping_bag_outlined,
+                    size: 64,
+                    color: Colors.grey[400],
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'No tienes órdenes',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Completa tu primera compra',
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+                  ),
+                ],
+              ),
+            );
+          }
 
+          if (state is OrderListLoaded) {
             return RefreshIndicator(
               onRefresh: () async {
-                _orderBloc.add(const GetOrdersEvent());
+                _orderListBloc.add(const RefreshOrderListEvent());
               },
               child: ListView.builder(
                 padding: const EdgeInsets.all(16),
@@ -154,7 +156,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
     );
   }
 
-  Color _getStatusColor(var status) {
+  Color _getStatusColor(OrderStatus status) {
     switch (status.toString()) {
       case 'OrderStatus.pending':
         return Colors.orange;
