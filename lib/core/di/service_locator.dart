@@ -1,38 +1,38 @@
-import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import 'package:get_it/get_it.dart';
 import 'package:basketapp/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:basketapp/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:basketapp/features/auth/domain/repositories/auth_repository.dart';
-import 'package:basketapp/features/auth/domain/usecases/login_usecase.dart';
-import 'package:basketapp/features/auth/domain/usecases/register_usecase.dart';
-import 'package:basketapp/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:basketapp/features/auth/domain/usecases/get_current_user_usecase.dart';
+import 'package:basketapp/features/auth/domain/usecases/login_usecase.dart';
+import 'package:basketapp/features/auth/domain/usecases/logout_usecase.dart';
+import 'package:basketapp/features/auth/domain/usecases/register_usecase.dart';
 import 'package:basketapp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:basketapp/features/cart/data/repositories/cart_repository_impl.dart';
 import 'package:basketapp/features/cart/domain/repositories/cart_repository.dart';
 import 'package:basketapp/features/cart/domain/usecases/add_to_cart_usecase.dart';
+import 'package:basketapp/features/cart/domain/usecases/clear_cart_usecase.dart';
+import 'package:basketapp/features/cart/domain/usecases/get_cart_items_usecase.dart';
 import 'package:basketapp/features/cart/domain/usecases/remove_from_cart_usecase.dart';
 import 'package:basketapp/features/cart/domain/usecases/update_quantity_usecase.dart';
-import 'package:basketapp/features/cart/domain/usecases/get_cart_items_usecase.dart';
-import 'package:basketapp/features/cart/domain/usecases/clear_cart_usecase.dart';
 import 'package:basketapp/features/cart/presentation/bloc/cart_bloc.dart';
-import 'package:basketapp/features/orders/data/repositories/order_repository_impl.dart';
+import 'package:basketapp/features/orders/data/repositories/order_repository_hive.dart';
 import 'package:basketapp/features/orders/domain/repositories/order_repository.dart';
-import 'package:basketapp/features/orders/domain/usecases/create_order_usecase.dart';
-import 'package:basketapp/features/orders/domain/usecases/get_orders_usecase.dart';
-import 'package:basketapp/features/orders/domain/usecases/get_order_by_id_usecase.dart';
-import 'package:basketapp/features/orders/domain/usecases/update_order_status_usecase.dart';
 import 'package:basketapp/features/orders/domain/usecases/cancel_order_usecase.dart';
+import 'package:basketapp/features/orders/domain/usecases/create_order_usecase.dart';
+import 'package:basketapp/features/orders/domain/usecases/get_order_by_id_usecase.dart';
+import 'package:basketapp/features/orders/domain/usecases/get_orders_usecase.dart';
+import 'package:basketapp/features/orders/domain/usecases/update_order_status_usecase.dart';
 import 'package:basketapp/features/orders/presentation/bloc/order_bloc.dart';
-import 'package:basketapp/features/products/data/datasources/product_remote_data_source.dart';
 import 'package:basketapp/features/products/data/datasources/product_local_data_source.dart';
+import 'package:basketapp/features/products/data/datasources/product_remote_data_source.dart';
 import 'package:basketapp/features/products/data/repositories/product_repository_impl.dart';
 import 'package:basketapp/features/products/domain/repositories/product_repository.dart';
-import 'package:basketapp/features/products/domain/usecases/get_products_usecase.dart';
 import 'package:basketapp/features/products/domain/usecases/get_product_by_id_usecase.dart';
+import 'package:basketapp/features/products/domain/usecases/get_products_usecase.dart';
 import 'package:basketapp/features/products/domain/usecases/rate_product_usecase.dart';
-import 'package:basketapp/features/products/presentation/bloc/products_bloc.dart';
 import 'package:basketapp/features/products/presentation/bloc/product_detail_bloc.dart';
+import 'package:basketapp/features/products/presentation/bloc/products_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
 
@@ -48,9 +48,7 @@ Future<void> setupServiceLocator() async {
   getIt.registerSingleton<ProductRemoteDataSource>(
     ProductRemoteDataSourceImpl(),
   );
-  getIt.registerSingleton<ProductLocalDataSource>(
-    ProductLocalDataSourceImpl(),
-  );
+  getIt.registerSingleton<ProductLocalDataSource>(ProductLocalDataSourceImpl());
 
   // Repositories
   getIt.registerSingleton<AuthRepository>(
@@ -65,17 +63,11 @@ Future<void> setupServiceLocator() async {
       localDataSource: getIt<ProductLocalDataSource>(),
     ),
   );
-  getIt.registerSingleton<CartRepository>(
-    CartRepositoryImpl(),
-  );
-  getIt.registerSingleton<OrderRepository>(
-    OrderRepositoryImpl(),
-  );
+  getIt.registerSingleton<CartRepository>(CartRepositoryImpl());
+  getIt.registerSingleton<OrderRepository>(OrderRepositoryHive());
 
   // Use Cases
-  getIt.registerSingleton<LoginUseCase>(
-    LoginUseCase(getIt<AuthRepository>()),
-  );
+  getIt.registerSingleton<LoginUseCase>(LoginUseCase(getIt<AuthRepository>()));
   getIt.registerSingleton<RegisterUseCase>(
     RegisterUseCase(getIt<AuthRepository>()),
   );
@@ -135,9 +127,7 @@ Future<void> setupServiceLocator() async {
     ),
   );
   getIt.registerSingleton<ProductsBloc>(
-    ProductsBloc(
-      getProductsUseCase: getIt<GetProductsUseCase>(),
-    ),
+    ProductsBloc(getProductsUseCase: getIt<GetProductsUseCase>()),
   );
   getIt.registerSingleton<ProductDetailBloc>(
     ProductDetailBloc(

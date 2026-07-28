@@ -1,3 +1,4 @@
+import 'package:basketapp/core/database/hive_config.dart';
 import 'package:basketapp/core/di/service_locator.dart';
 import 'package:basketapp/core/theme/app_theme.dart';
 import 'package:basketapp/features/auth/presentation/bloc/auth_bloc.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await initHive();
   await setupServiceLocator();
   runApp(const MyApp());
 }
