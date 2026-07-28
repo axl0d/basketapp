@@ -16,6 +16,14 @@ import 'package:basketapp/features/cart/domain/usecases/update_quantity_usecase.
 import 'package:basketapp/features/cart/domain/usecases/get_cart_items_usecase.dart';
 import 'package:basketapp/features/cart/domain/usecases/clear_cart_usecase.dart';
 import 'package:basketapp/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:basketapp/features/orders/data/repositories/order_repository_impl.dart';
+import 'package:basketapp/features/orders/domain/repositories/order_repository.dart';
+import 'package:basketapp/features/orders/domain/usecases/create_order_usecase.dart';
+import 'package:basketapp/features/orders/domain/usecases/get_orders_usecase.dart';
+import 'package:basketapp/features/orders/domain/usecases/get_order_by_id_usecase.dart';
+import 'package:basketapp/features/orders/domain/usecases/update_order_status_usecase.dart';
+import 'package:basketapp/features/orders/domain/usecases/cancel_order_usecase.dart';
+import 'package:basketapp/features/orders/presentation/bloc/order_bloc.dart';
 import 'package:basketapp/features/products/data/datasources/product_remote_data_source.dart';
 import 'package:basketapp/features/products/data/datasources/product_local_data_source.dart';
 import 'package:basketapp/features/products/data/repositories/product_repository_impl.dart';
@@ -60,6 +68,9 @@ Future<void> setupServiceLocator() async {
   getIt.registerSingleton<CartRepository>(
     CartRepositoryImpl(),
   );
+  getIt.registerSingleton<OrderRepository>(
+    OrderRepositoryImpl(),
+  );
 
   // Use Cases
   getIt.registerSingleton<LoginUseCase>(
@@ -98,6 +109,21 @@ Future<void> setupServiceLocator() async {
   getIt.registerSingleton<ClearCartUseCase>(
     ClearCartUseCase(getIt<CartRepository>()),
   );
+  getIt.registerSingleton<CreateOrderUseCase>(
+    CreateOrderUseCase(getIt<OrderRepository>()),
+  );
+  getIt.registerSingleton<GetOrdersUseCase>(
+    GetOrdersUseCase(getIt<OrderRepository>()),
+  );
+  getIt.registerSingleton<GetOrderByIdUseCase>(
+    GetOrderByIdUseCase(getIt<OrderRepository>()),
+  );
+  getIt.registerSingleton<UpdateOrderStatusUseCase>(
+    UpdateOrderStatusUseCase(getIt<OrderRepository>()),
+  );
+  getIt.registerSingleton<CancelOrderUseCase>(
+    CancelOrderUseCase(getIt<OrderRepository>()),
+  );
 
   // BLoCs
   getIt.registerSingleton<AuthBloc>(
@@ -126,6 +152,15 @@ Future<void> setupServiceLocator() async {
       updateQuantityUseCase: getIt<UpdateQuantityUseCase>(),
       getCartItemsUseCase: getIt<GetCartItemsUseCase>(),
       clearCartUseCase: getIt<ClearCartUseCase>(),
+    ),
+  );
+  getIt.registerSingleton<OrderBloc>(
+    OrderBloc(
+      createOrderUseCase: getIt<CreateOrderUseCase>(),
+      getOrdersUseCase: getIt<GetOrdersUseCase>(),
+      getOrderByIdUseCase: getIt<GetOrderByIdUseCase>(),
+      updateOrderStatusUseCase: getIt<UpdateOrderStatusUseCase>(),
+      cancelOrderUseCase: getIt<CancelOrderUseCase>(),
     ),
   );
 }

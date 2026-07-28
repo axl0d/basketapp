@@ -3,6 +3,9 @@ import 'package:basketapp/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:basketapp/features/cart/presentation/bloc/cart_event.dart';
 import 'package:basketapp/features/cart/presentation/bloc/cart_state.dart';
 import 'package:basketapp/features/cart/presentation/widgets/cart_item_widget.dart';
+import 'package:basketapp/features/orders/presentation/bloc/order_bloc.dart';
+import 'package:basketapp/features/orders/presentation/bloc/order_event.dart';
+import 'package:basketapp/features/orders/presentation/bloc/order_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,26 +18,53 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   late CartBloc _cartBloc;
+  late OrderBloc _orderBloc;
 
   @override
   void initState() {
     super.initState();
     _cartBloc = getIt<CartBloc>();
+    _orderBloc = getIt<OrderBloc>();
     _cartBloc.add(const GetCartItemsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Carrito'),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+    return BlocListener<OrderBloc, OrderState>(
+      bloc: _orderBloc,
+      listener: (context, state) {
+        if (state is OrderCreated) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                '✓ Orden #${state.order.id.substring(0, 8)} creada exitosamente',
+              ),
+              backgroundColor: Colors.green,
+              duration: const Duration(seconds: 2),
+            ),
+          );
+          Future.delayed(const Duration(seconds: 1), () {
+            Navigator.pop(context);
+          });
+        } else if (state is OrderError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Carrito'),
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
-      ),
-      body: BlocBuilder<CartBloc, CartState>(
+        body: BlocBuilder<CartBloc, CartState>(
         bloc: _cartBloc,
         builder: (context, state) {
           if (state is CartLoading) {
@@ -187,15 +217,7 @@ class _CartScreenState extends State<CartScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  '✓ Compra completada (${state.totalItems} items)',
-                                ),
-                                backgroundColor: Colors.green,
-                                duration: const Duration(seconds: 2),
-                              ),
-                            );
+                            _orderBloc.add(CreateOrderEvent(state.items, state.totalPrice));
                             _cartBloc.add(const ClearCartEvent());
                           },
                           style: ElevatedButton.styleFrom(
@@ -228,6 +250,7 @@ class _CartScreenState extends State<CartScreen> {
 
           return const Center(child: Text('Estado desconocido'));
         },
+        ),
       ),
     );
   }

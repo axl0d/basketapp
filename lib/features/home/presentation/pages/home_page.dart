@@ -3,6 +3,7 @@ import 'package:basketapp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:basketapp/features/auth/presentation/bloc/auth_event.dart';
 import 'package:basketapp/features/auth/presentation/bloc/auth_state.dart';
 import 'package:basketapp/features/cart/presentation/widgets/cart_badge.dart';
+import 'package:basketapp/features/orders/presentation/screens/orders_screen.dart';
 import 'package:basketapp/features/products/presentation/bloc/products_bloc.dart';
 import 'package:basketapp/features/products/presentation/bloc/products_event.dart';
 import 'package:basketapp/features/products/presentation/bloc/products_state.dart';
@@ -39,8 +40,17 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Tienda'),
         elevation: 0,
-        actions: const [
-          CartBadgeIcon(),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_bag_outlined),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const OrdersScreen()),
+              );
+            },
+          ),
+          const CartBadgeIcon(),
         ],
       ),
       body: BlocBuilder<AuthBloc, AuthState>(
