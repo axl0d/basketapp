@@ -1,5 +1,5 @@
-import 'package:equatable/equatable.dart';
 import 'package:basketapp/features/cart/domain/entities/cart_item_entity.dart';
+import 'package:equatable/equatable.dart';
 
 enum OrderStatus {
   pending('Pendiente'),
@@ -8,7 +8,22 @@ enum OrderStatus {
   cancelled('Cancelado');
 
   final String label;
+
   const OrderStatus(this.label);
+}
+
+OrderStatus fromNotificationToOrderStatus(String status) {
+  switch (status) {
+    case 'Pendiente':
+      return OrderStatus.pending;
+    case 'En proceso':
+      return OrderStatus.processing;
+    case 'Completado':
+      return OrderStatus.completed;
+    case 'Cancelado':
+    default:
+      return OrderStatus.cancelled;
+  }
 }
 
 class Order extends Equatable {
@@ -46,6 +61,15 @@ class Order extends Equatable {
     );
   }
 
+  String get orderId => id.substring(id.length - 4);
+
   @override
-  List<Object?> get props => [id, items, totalPrice, status, createdAt, updatedAt];
+  List<Object?> get props => [
+    id,
+    items,
+    totalPrice,
+    status,
+    createdAt,
+    updatedAt,
+  ];
 }

@@ -3,6 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 typedef MessageHandler = void Function(RemoteMessage message);
+typedef NotificationCallback =
+    void Function(
+      String title,
+      String body,
+      String orderId,
+      String orderStatus,
+    );
 
 const AndroidInitializationSettings androidInitSettings =
     AndroidInitializationSettings('@drawable/ic_notification');
@@ -50,17 +57,14 @@ const NotificationDetails platformChannelSpecifics = NotificationDetails(
 );
 
 class NotificationService {
-  static final NotificationService _instance = NotificationService._internal();
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  late final FlutterLocalNotificationsPlugin _localNotifications;
+  NotificationService(this._firebaseMessaging, this._localNotifications);
 
-  factory NotificationService() {
-    return _instance;
-  }
+  final FirebaseMessaging _firebaseMessaging;
+  final FlutterLocalNotificationsPlugin _localNotifications;
 
-  NotificationService._internal() {
-    _localNotifications = FlutterLocalNotificationsPlugin();
-  }
+  NotificationCallback? onForegroundMessage;
+  NotificationCallback? onBackgroundMessage;
+  NotificationCallback? onTerminatedMessage;
 
   Future<void> initialize() async {
     try {
@@ -119,16 +123,31 @@ class NotificationService {
     }
   }
 
-  void _handleForegroundMessage(RemoteMessage message) {
+  void _handleForegroundMessage(RemoteMessage message) async {
     if (kDebugMode) {
       print('Handling a foreground message: ${message.messageId}');
     }
 
     final notification = message.notification;
     if (notification != null) {
+      final payload = message.data;
+      if (kDebugMode) {
+        print('Payload: ${message.data}');
+      }
+
+      final orderId = payload['orderId'] ?? '';
+      final orderStatus = payload['orderStatus'] ?? '';
+
       showLocalNotification(
         title: notification.title ?? 'Notificación',
         body: notification.body ?? '',
+      );
+
+      onForegroundMessage?.call(
+        notification.title ?? 'Notificación',
+        notification.body ?? '',
+        orderId,
+        orderStatus,
       );
     }
   }
@@ -137,11 +156,39 @@ class NotificationService {
     if (kDebugMode) {
       print('Handling a background message: ${message.messageId}');
     }
+
+    final notification = message.notification;
+    if (notification != null) {
+      final payload = message.data['payload'];
+      final orderId = payload?['orderId'] ?? '';
+      final orderStatus = payload?['orderStatus'] ?? '';
+
+      onBackgroundMessage?.call(
+        notification.title ?? 'Notificación',
+        notification.body ?? '',
+        orderId,
+        orderStatus,
+      );
+    }
   }
 
   void _handleTerminatedMessage(RemoteMessage message) {
     if (kDebugMode) {
       print('App opened from terminated state: ${message.messageId}');
+    }
+
+    final notification = message.notification;
+    if (notification != null) {
+      final payload = message.data['payload'];
+      final orderId = payload?['orderId'] ?? '';
+      final orderStatus = payload?['orderStatus'] ?? '';
+
+      onTerminatedMessage?.call(
+        notification.title ?? 'Notificación',
+        notification.body ?? '',
+        orderId,
+        orderStatus,
+      );
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:basketapp/core/database/hive_config.dart';
 import 'package:basketapp/core/di/service_locator.dart';
-import 'package:basketapp/core/notifications/notification_service.dart';
+import 'package:basketapp/core/notifications/bloc/notification_bloc.dart';
+import 'package:basketapp/core/notifications/bloc/notification_event.dart';
 import 'package:basketapp/core/theme/app_theme.dart';
 import 'package:basketapp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:basketapp/features/auth/presentation/pages/login_page.dart';
@@ -19,10 +20,8 @@ void main() async {
   await initHive();
   await setupServiceLocator();
 
-  final notificationService = getIt<NotificationService>();
-  await notificationService.initialize();
-
-  notificationService.requestPermissions();
+  final notificationBloc = getIt<NotificationBloc>();
+  notificationBloc.add(const InitializeNotificationsEvent());
 
   runApp(const MyApp());
 }
@@ -36,6 +35,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(create: (context) => getIt<AuthBloc>()),
         BlocProvider<CartBloc>(create: (context) => getIt<CartBloc>()),
+        BlocProvider<NotificationBloc>(create: (context) => getIt<NotificationBloc>()),
       ],
       child: MaterialApp(
         title: 'BasketApp',

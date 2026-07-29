@@ -1,3 +1,4 @@
+import 'package:basketapp/core/notifications/bloc/notification_bloc.dart';
 import 'package:basketapp/core/notifications/notification_service.dart';
 import 'package:basketapp/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:basketapp/features/auth/data/repositories/auth_repository_impl.dart';
@@ -34,6 +35,8 @@ import 'package:basketapp/features/products/domain/usecases/rate_product_usecase
 import 'package:basketapp/features/products/presentation/bloc/product_detail_bloc.dart';
 import 'package:basketapp/features/products/presentation/bloc/products_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -44,7 +47,21 @@ Future<void> setupServiceLocator() async {
   getIt.registerSingleton<firebase_auth.FirebaseAuth>(firebaseAuth);
 
   // Notifications
-  getIt.registerSingleton<NotificationService>(NotificationService());
+  final fcm = FirebaseMessaging.instance;
+  getIt.registerSingleton<FirebaseMessaging>(fcm);
+
+  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  getIt.registerSingleton<FlutterLocalNotificationsPlugin>(
+    flutterLocalNotificationsPlugin,
+  );
+
+  // Notifications
+  getIt.registerSingleton<NotificationService>(
+    NotificationService(
+      getIt<FirebaseMessaging>(),
+      getIt<FlutterLocalNotificationsPlugin>(),
+    ),
+  );
 
   // Data Sources
   getIt.registerSingleton<AuthRemoteDataSource>(
@@ -160,5 +177,8 @@ Future<void> setupServiceLocator() async {
   );
   getIt.registerSingleton<OrderListBloc>(
     OrderListBloc(getOrdersUseCase: getIt<GetOrdersUseCase>()),
+  );
+  getIt.registerSingleton<NotificationBloc>(
+    NotificationBloc(notificationService: getIt<NotificationService>()),
   );
 }
