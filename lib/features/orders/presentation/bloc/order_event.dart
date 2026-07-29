@@ -1,6 +1,6 @@
-import 'package:equatable/equatable.dart';
 import 'package:basketapp/features/cart/domain/entities/cart_item_entity.dart';
 import 'package:basketapp/features/orders/domain/entities/order.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class OrderEvent extends Equatable {
   const OrderEvent();
@@ -45,4 +45,13 @@ class CancelOrderEvent extends OrderEvent {
 
   @override
   List<Object?> get props => [orderId];
+}
+
+class CreatedOrderSuccessfullyEvent extends OrderEvent {
+  const CreatedOrderSuccessfullyEvent({required this.order});
+
+  final Order order;
+
+  @override
+  List<Object?> get props => [order];
 }

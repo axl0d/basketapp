@@ -1,3 +1,4 @@
+import 'package:basketapp/core/notifications/notification_service.dart';
 import 'package:basketapp/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:basketapp/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:basketapp/features/auth/domain/repositories/auth_repository.dart';
@@ -41,6 +42,9 @@ Future<void> setupServiceLocator() async {
   // Firebase
   final firebaseAuth = firebase_auth.FirebaseAuth.instance;
   getIt.registerSingleton<firebase_auth.FirebaseAuth>(firebaseAuth);
+
+  // Notifications
+  getIt.registerSingleton<NotificationService>(NotificationService());
 
   // Data Sources
   getIt.registerSingleton<AuthRemoteDataSource>(
@@ -151,6 +155,7 @@ Future<void> setupServiceLocator() async {
       getOrderByIdUseCase: getIt<GetOrderByIdUseCase>(),
       updateOrderStatusUseCase: getIt<UpdateOrderStatusUseCase>(),
       cancelOrderUseCase: getIt<CancelOrderUseCase>(),
+      notificationService: getIt<NotificationService>(),
     ),
   );
   getIt.registerSingleton<OrderListBloc>(
