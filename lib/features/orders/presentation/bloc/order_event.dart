@@ -1,5 +1,6 @@
 import 'package:basketapp/features/cart/domain/entities/cart_item_entity.dart';
 import 'package:basketapp/features/orders/domain/entities/order.dart';
+import 'package:basketapp/features/payment_methods/domain/entities/payment_method_selection.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class OrderEvent extends Equatable {
@@ -12,11 +13,12 @@ abstract class OrderEvent extends Equatable {
 class CreateOrderEvent extends OrderEvent {
   final List<CartItem> items;
   final double totalPrice;
+  final PaymentMethodSelection paymentMethod;
 
-  const CreateOrderEvent(this.items, this.totalPrice);
+  const CreateOrderEvent(this.items, this.totalPrice, this.paymentMethod);
 
   @override
-  List<Object?> get props => [items, totalPrice];
+  List<Object?> get props => [items, totalPrice, paymentMethod];
 }
 
 class GetOrderByIdEvent extends OrderEvent {

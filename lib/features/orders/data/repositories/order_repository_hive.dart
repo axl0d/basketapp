@@ -7,6 +7,7 @@ import 'package:basketapp/features/cart/domain/entities/cart_item_entity.dart';
 import 'package:basketapp/features/orders/domain/entities/order.dart';
 import 'package:basketapp/features/orders/domain/repositories/order_repository.dart';
 import 'package:basketapp/features/orders/data/models/order_hive_model.dart';
+import 'package:basketapp/features/payment_methods/domain/entities/payment_method_selection.dart';
 
 class OrderRepositoryHive extends OrderRepository {
   late final Box<OrderHiveModel> _ordersBox;
@@ -25,6 +26,7 @@ class OrderRepositoryHive extends OrderRepository {
   Future<dartz.Either<Failure, Order>> createOrder(
     List<CartItem> items,
     double totalPrice,
+    PaymentMethodSelection paymentMethod,
   ) async {
     try {
       final order = Order(
@@ -34,6 +36,9 @@ class OrderRepositoryHive extends OrderRepository {
         status: OrderStatus.pending,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
+        paymentMethodType: paymentMethod.type,
+        cardLast4: paymentMethod.card?.last4,
+        cardBrand: paymentMethod.card?.brand.name,
       );
 
       final hiveModel = OrderHiveModel.fromEntity(order);

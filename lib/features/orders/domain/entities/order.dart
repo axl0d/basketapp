@@ -1,4 +1,5 @@
 import 'package:basketapp/features/cart/domain/entities/cart_item_entity.dart';
+import 'package:basketapp/features/payment_methods/domain/entities/payment_method_selection.dart';
 import 'package:equatable/equatable.dart';
 
 enum OrderStatus {
@@ -33,6 +34,9 @@ class Order extends Equatable {
   final OrderStatus status;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final PaymentMethodType paymentMethodType;
+  final String? cardLast4;
+  final String? cardBrand;
 
   const Order({
     required this.id,
@@ -41,6 +45,9 @@ class Order extends Equatable {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
+    required this.paymentMethodType,
+    this.cardLast4,
+    this.cardBrand,
   });
 
   Order copyWith({
@@ -50,6 +57,9 @@ class Order extends Equatable {
     OrderStatus? status,
     DateTime? createdAt,
     DateTime? updatedAt,
+    PaymentMethodType? paymentMethodType,
+    String? cardLast4,
+    String? cardBrand,
   }) {
     return Order(
       id: id ?? this.id,
@@ -58,6 +68,9 @@ class Order extends Equatable {
       status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      paymentMethodType: paymentMethodType ?? this.paymentMethodType,
+      cardLast4: cardLast4 ?? this.cardLast4,
+      cardBrand: cardBrand ?? this.cardBrand,
     );
   }
 
@@ -71,5 +84,8 @@ class Order extends Equatable {
     status,
     createdAt,
     updatedAt,
+    paymentMethodType,
+    cardLast4,
+    cardBrand,
   ];
 }

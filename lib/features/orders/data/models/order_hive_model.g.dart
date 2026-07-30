@@ -23,13 +23,16 @@ class OrderHiveModelAdapter extends TypeAdapter<OrderHiveModel> {
       status: fields[3] as OrderStatusHiveModel,
       createdAt: fields[4] as DateTime,
       updatedAt: fields[5] as DateTime,
+      paymentMethodTypeIndex: fields[6] as int?,
+      cardLast4: fields[7] as String?,
+      cardBrand: fields[8] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, OrderHiveModel obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,7 +44,13 @@ class OrderHiveModelAdapter extends TypeAdapter<OrderHiveModel> {
       ..writeByte(4)
       ..write(obj.createdAt)
       ..writeByte(5)
-      ..write(obj.updatedAt);
+      ..write(obj.updatedAt)
+      ..writeByte(6)
+      ..write(obj.paymentMethodTypeIndex)
+      ..writeByte(7)
+      ..write(obj.cardLast4)
+      ..writeByte(8)
+      ..write(obj.cardBrand);
   }
 
   @override

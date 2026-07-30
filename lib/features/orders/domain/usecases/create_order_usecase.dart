@@ -3,6 +3,7 @@ import 'package:basketapp/core/errors/failure.dart';
 import 'package:basketapp/features/cart/domain/entities/cart_item_entity.dart';
 import 'package:basketapp/features/orders/domain/entities/order.dart';
 import 'package:basketapp/features/orders/domain/repositories/order_repository.dart';
+import 'package:basketapp/features/payment_methods/domain/entities/payment_method_selection.dart';
 
 class CreateOrderUseCase {
   final OrderRepository repository;
@@ -12,7 +13,8 @@ class CreateOrderUseCase {
   Future<dartz.Either<Failure, Order>> call(
     List<CartItem> items,
     double totalPrice,
+    PaymentMethodSelection paymentMethod,
   ) {
-    return repository.createOrder(items, totalPrice);
+    return repository.createOrder(items, totalPrice, paymentMethod);
   }
 }

@@ -6,6 +6,8 @@ import 'package:basketapp/features/cart/presentation/widgets/cart_item_widget.da
 import 'package:basketapp/features/orders/presentation/bloc/order_bloc.dart';
 import 'package:basketapp/features/orders/presentation/bloc/order_event.dart';
 import 'package:basketapp/features/orders/presentation/bloc/order_state.dart';
+import 'package:basketapp/features/payment_methods/domain/entities/payment_method_selection.dart';
+import 'package:basketapp/features/payment_methods/presentation/screens/payment_method_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -207,9 +209,18 @@ class _CartScreenState extends State<CartScreen> {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              final selection = await Navigator.push<PaymentMethodSelection>(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => PaymentMethodSelectionScreen(
+                                    totalPrice: state.totalPrice,
+                                  ),
+                                ),
+                              );
+                              if (selection == null) return;
                               _orderBloc.add(
-                                CreateOrderEvent(state.items, state.totalPrice),
+                                CreateOrderEvent(state.items, state.totalPrice, selection),
                               );
                               _cartBloc.add(const ClearCartEvent());
                             },

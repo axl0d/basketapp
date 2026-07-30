@@ -25,6 +25,11 @@ import 'package:basketapp/features/orders/domain/usecases/get_orders_usecase.dar
 import 'package:basketapp/features/orders/domain/usecases/update_order_status_usecase.dart';
 import 'package:basketapp/features/orders/presentation/bloc/order_bloc.dart';
 import 'package:basketapp/features/orders/presentation/bloc/order_list_bloc.dart';
+import 'package:basketapp/features/payment_methods/data/repositories/payment_method_repository_hive.dart';
+import 'package:basketapp/features/payment_methods/domain/repositories/payment_method_repository.dart';
+import 'package:basketapp/features/payment_methods/domain/usecases/add_payment_card_usecase.dart';
+import 'package:basketapp/features/payment_methods/domain/usecases/get_saved_cards_usecase.dart';
+import 'package:basketapp/features/payment_methods/presentation/bloc/payment_method_bloc.dart';
 import 'package:basketapp/features/products/data/datasources/product_local_data_source.dart';
 import 'package:basketapp/features/products/data/datasources/product_remote_data_source.dart';
 import 'package:basketapp/features/products/data/repositories/product_repository_impl.dart';
@@ -86,6 +91,7 @@ Future<void> setupServiceLocator() async {
     ),
   );
   getIt.registerSingleton<CartRepository>(CartRepositoryImpl());
+  getIt.registerSingleton<PaymentMethodRepository>(PaymentMethodRepositoryHive());
   getIt.registerSingleton<OrderRepository>(OrderRepositoryHive());
 
   // Use Cases
@@ -122,6 +128,12 @@ Future<void> setupServiceLocator() async {
   );
   getIt.registerSingleton<ClearCartUseCase>(
     ClearCartUseCase(getIt<CartRepository>()),
+  );
+  getIt.registerSingleton<GetSavedCardsUseCase>(
+    GetSavedCardsUseCase(getIt<PaymentMethodRepository>()),
+  );
+  getIt.registerSingleton<AddPaymentCardUseCase>(
+    AddPaymentCardUseCase(getIt<PaymentMethodRepository>()),
   );
   getIt.registerSingleton<CreateOrderUseCase>(
     CreateOrderUseCase(getIt<OrderRepository>()),
@@ -164,6 +176,12 @@ Future<void> setupServiceLocator() async {
       updateQuantityUseCase: getIt<UpdateQuantityUseCase>(),
       getCartItemsUseCase: getIt<GetCartItemsUseCase>(),
       clearCartUseCase: getIt<ClearCartUseCase>(),
+    ),
+  );
+  getIt.registerSingleton<PaymentMethodBloc>(
+    PaymentMethodBloc(
+      getSavedCardsUseCase: getIt<GetSavedCardsUseCase>(),
+      addPaymentCardUseCase: getIt<AddPaymentCardUseCase>(),
     ),
   );
   getIt.registerSingleton<OrderBloc>(

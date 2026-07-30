@@ -4,6 +4,7 @@ import 'package:basketapp/core/errors/failure.dart';
 import 'package:basketapp/features/cart/domain/entities/cart_item_entity.dart';
 import 'package:basketapp/features/orders/domain/entities/order.dart';
 import 'package:basketapp/features/orders/domain/repositories/order_repository.dart';
+import 'package:basketapp/features/payment_methods/domain/entities/payment_method_selection.dart';
 
 class OrderRepositoryImpl extends OrderRepository {
   final List<Order> _orders = [];
@@ -18,6 +19,7 @@ class OrderRepositoryImpl extends OrderRepository {
   Future<dartz.Either<Failure, Order>> createOrder(
     List<CartItem> items,
     double totalPrice,
+    PaymentMethodSelection paymentMethod,
   ) async {
     try {
       final order = Order(
@@ -27,6 +29,9 @@ class OrderRepositoryImpl extends OrderRepository {
         status: OrderStatus.pending,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
+        paymentMethodType: paymentMethod.type,
+        cardLast4: paymentMethod.card?.last4,
+        cardBrand: paymentMethod.card?.brand.name,
       );
 
       _orders.add(order);

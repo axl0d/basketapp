@@ -1,7 +1,8 @@
-import 'package:hive/hive.dart';
-import 'package:basketapp/features/orders/domain/entities/order.dart';
 import 'package:basketapp/features/orders/data/models/cart_item_hive_model.dart';
 import 'package:basketapp/features/orders/data/models/order_status_hive_model.dart';
+import 'package:basketapp/features/orders/domain/entities/order.dart';
+import 'package:basketapp/features/payment_methods/domain/entities/payment_method_selection.dart';
+import 'package:hive/hive.dart';
 
 part 'order_hive_model.g.dart';
 
@@ -25,6 +26,15 @@ class OrderHiveModel {
   @HiveField(5)
   final DateTime updatedAt;
 
+  @HiveField(6)
+  final int? paymentMethodTypeIndex;
+
+  @HiveField(7)
+  final String? cardLast4;
+
+  @HiveField(8)
+  final String? cardBrand;
+
   OrderHiveModel({
     required this.id,
     required this.items,
@@ -32,6 +42,9 @@ class OrderHiveModel {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
+    required this.paymentMethodTypeIndex,
+    this.cardLast4,
+    this.cardBrand,
   });
 
   Order toEntity() => Order(
@@ -41,14 +54,22 @@ class OrderHiveModel {
     status: status.toEntity(),
     createdAt: createdAt,
     updatedAt: updatedAt,
+    paymentMethodType: PaymentMethodType.values[paymentMethodTypeIndex ?? 0],
+    cardLast4: cardLast4,
+    cardBrand: cardBrand,
   );
 
   factory OrderHiveModel.fromEntity(Order order) => OrderHiveModel(
     id: order.id,
-    items: order.items.map((item) => CartItemHiveModel.fromEntity(item)).toList(),
+    items: order.items
+        .map((item) => CartItemHiveModel.fromEntity(item))
+        .toList(),
     totalPrice: order.totalPrice,
     status: OrderStatusHiveModel.fromEntity(order.status),
     createdAt: order.createdAt,
     updatedAt: order.updatedAt,
+    paymentMethodTypeIndex: order.paymentMethodType.index,
+    cardLast4: order.cardLast4,
+    cardBrand: order.cardBrand,
   );
 }

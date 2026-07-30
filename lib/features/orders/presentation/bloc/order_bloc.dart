@@ -33,7 +33,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     Emitter<OrderState> emit,
   ) async {
     emit(const OrderLoading());
-    final result = await createOrderUseCase(event.items, event.totalPrice);
+    final result = await createOrderUseCase(event.items, event.totalPrice, event.paymentMethod);
     result.fold(
       (failure) => emit(OrderError(failure.message)),
       (order) => emit(OrderCreated(order)),
