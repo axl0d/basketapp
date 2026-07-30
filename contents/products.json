@@ -1,0 +1,502 @@
+[
+  {
+    "id": "p001",
+    "name": "Audífonos Bluetooth over-ear",
+    "description": "Cancelación de ruido activa, 30 horas de batería.",
+    "price": 89.99,
+    "imageUrl": "https://picsum.photos/seed/p001/400/400",
+    "category": "Electrónica",
+    "stock": 24,
+    "rating": 4.5
+  },
+  {
+    "id": "p002",
+    "name": "Smartwatch deportivo",
+    "description": "GPS integrado, monitoreo de frecuencia cardíaca y SpO2.",
+    "price": 129.99,
+    "imageUrl": "https://picsum.photos/seed/p002/400/400",
+    "category": "Electrónica",
+    "stock": 15,
+    "rating": 4.3
+  },
+  {
+    "id": "p003",
+    "name": "Cargador inalámbrico 15W",
+    "description": "Compatible con Qi, base antideslizante.",
+    "price": 24.5,
+    "imageUrl": "https://picsum.photos/seed/p003/400/400",
+    "category": "Electrónica",
+    "stock": 40,
+    "rating": 4.1
+  },
+  {
+    "id": "p004",
+    "name": "Parlante portátil resistente al agua",
+    "description": "IPX7, 12 horas de reproducción, sonido 360°.",
+    "price": 59.99,
+    "imageUrl": "https://picsum.photos/seed/p004/400/400",
+    "category": "Electrónica",
+    "stock": 18,
+    "rating": 4.6
+  },
+  {
+    "id": "p005",
+    "name": "Power bank 20000mAh",
+    "description": "Carga rápida USB-C, dos puertos de salida.",
+    "price": 34.99,
+    "imageUrl": "https://picsum.photos/seed/p005/400/400",
+    "category": "Electrónica",
+    "stock": 32,
+    "rating": 4.4
+  },
+  {
+    "id": "p006",
+    "name": "Teclado mecánico inalámbrico",
+    "description": "Switches rojos, retroiluminación RGB.",
+    "price": 79.9,
+    "imageUrl": "https://picsum.photos/seed/p006/400/400",
+    "category": "Electrónica",
+    "stock": 10,
+    "rating": 4.7
+  },
+  {
+    "id": "p007",
+    "name": "Mouse ergonómico vertical",
+    "description": "Reduce tensión en la muñeca, sensor 4000 DPI.",
+    "price": 22.0,
+    "imageUrl": "https://picsum.photos/seed/p007/400/400",
+    "category": "Electrónica",
+    "stock": 27,
+    "rating": 4.0
+  },
+  {
+    "id": "p008",
+    "name": "Camiseta básica algodón pima",
+    "description": "Corte regular, disponible en varios colores.",
+    "price": 15.99,
+    "imageUrl": "https://picsum.photos/seed/p008/400/400",
+    "category": "Ropa",
+    "stock": 60,
+    "rating": 4.2
+  },
+  {
+    "id": "p009",
+    "name": "Jean slim fit",
+    "description": "Mezclilla stretch, cinco bolsillos.",
+    "price": 42.0,
+    "imageUrl": "https://picsum.photos/seed/p009/400/400",
+    "category": "Ropa",
+    "stock": 35,
+    "rating": 4.3
+  },
+  {
+    "id": "p010",
+    "name": "Chaqueta cortavientos",
+    "description": "Impermeable ligera, ideal para trekking urbano.",
+    "price": 55.5,
+    "imageUrl": "https://picsum.photos/seed/p010/400/400",
+    "category": "Ropa",
+    "stock": 20,
+    "rating": 4.5
+  },
+  {
+    "id": "p011",
+    "name": "Sudadera con capucha unisex",
+    "description": "Interior afelpado, bolsillo canguro.",
+    "price": 38.9,
+    "imageUrl": "https://picsum.photos/seed/p011/400/400",
+    "category": "Ropa",
+    "stock": 45,
+    "rating": 4.4
+  },
+  {
+    "id": "p012",
+    "name": "Vestido casual de verano",
+    "description": "Tela ligera transpirable, estampado floral.",
+    "price": 33.0,
+    "imageUrl": "https://picsum.photos/seed/p012/400/400",
+    "category": "Ropa",
+    "stock": 22,
+    "rating": 4.1
+  },
+  {
+    "id": "p013",
+    "name": "Medias deportivas (pack x3)",
+    "description": "Compresión media, tejido antiampollas.",
+    "price": 12.99,
+    "imageUrl": "https://picsum.photos/seed/p013/400/400",
+    "category": "Ropa",
+    "stock": 80,
+    "rating": 4.0
+  },
+  {
+    "id": "p014",
+    "name": "Set de sábanas microfibra queen",
+    "description": "4 piezas, hipoalergénico, fácil cuidado.",
+    "price": 45.0,
+    "imageUrl": "https://picsum.photos/seed/p014/400/400",
+    "category": "Hogar",
+    "stock": 18,
+    "rating": 4.3
+  },
+  {
+    "id": "p015",
+    "name": "Lámpara de mesa LED regulable",
+    "description": "3 tonos de luz, control táctil.",
+    "price": 28.5,
+    "imageUrl": "https://picsum.photos/seed/p015/400/400",
+    "category": "Hogar",
+    "stock": 26,
+    "rating": 4.2
+  },
+  {
+    "id": "p016",
+    "name": "Organizador de closet apilable",
+    "description": "Plástico resistente, 6 compartimentos.",
+    "price": 19.99,
+    "imageUrl": "https://picsum.photos/seed/p016/400/400",
+    "category": "Hogar",
+    "stock": 30,
+    "rating": 4.0
+  },
+  {
+    "id": "p017",
+    "name": "Juego de sartenes antiadherentes (3 pzas)",
+    "description": "Apto para inducción, mango ergonómico.",
+    "price": 49.9,
+    "imageUrl": "https://picsum.photos/seed/p017/400/400",
+    "category": "Hogar",
+    "stock": 14,
+    "rating": 4.6
+  },
+  {
+    "id": "p018",
+    "name": "Difusor de aromas ultrasónico",
+    "description": "Capacidad 300ml, luz LED de colores.",
+    "price": 21.0,
+    "imageUrl": "https://picsum.photos/seed/p018/400/400",
+    "category": "Hogar",
+    "stock": 33,
+    "rating": 4.4
+  },
+  {
+    "id": "p019",
+    "name": "Cortina blackout 140x220cm",
+    "description": "Bloquea 95% de la luz, aislante térmico.",
+    "price": 26.75,
+    "imageUrl": "https://picsum.photos/seed/p019/400/400",
+    "category": "Hogar",
+    "stock": 21,
+    "rating": 4.1
+  },
+  {
+    "id": "p020",
+    "name": "Alfombra de área 120x180cm",
+    "description": "Pelo corto, antideslizante, fácil limpieza.",
+    "price": 62.0,
+    "imageUrl": "https://picsum.photos/seed/p020/400/400",
+    "category": "Hogar",
+    "stock": 9,
+    "rating": 4.3
+  },
+  {
+    "id": "p021",
+    "name": "Mat de yoga antideslizante 6mm",
+    "description": "TPE ecológico, incluye correa de transporte.",
+    "price": 23.99,
+    "imageUrl": "https://picsum.photos/seed/p021/400/400",
+    "category": "Deportes",
+    "stock": 40,
+    "rating": 4.5
+  },
+  {
+    "id": "p022",
+    "name": "Set de bandas elásticas (5 niveles)",
+    "description": "Para entrenamiento de resistencia en casa.",
+    "price": 17.5,
+    "imageUrl": "https://picsum.photos/seed/p022/400/400",
+    "category": "Deportes",
+    "stock": 55,
+    "rating": 4.2
+  },
+  {
+    "id": "p023",
+    "name": "Botella térmica 1L",
+    "description": "Acero inoxidable, mantiene frío/calor 12h.",
+    "price": 19.0,
+    "imageUrl": "https://picsum.photos/seed/p023/400/400",
+    "category": "Deportes",
+    "stock": 48,
+    "rating": 4.6
+  },
+  {
+    "id": "p024",
+    "name": "Guantes de entrenamiento con muñequera",
+    "description": "Grip antideslizante, transpirables.",
+    "price": 16.99,
+    "imageUrl": "https://picsum.photos/seed/p024/400/400",
+    "category": "Deportes",
+    "stock": 37,
+    "rating": 4.0
+  },
+  {
+    "id": "p025",
+    "name": "Cuerda para saltar con contador",
+    "description": "Cable de acero ajustable, mango antideslizante.",
+    "price": 11.5,
+    "imageUrl": "https://picsum.photos/seed/p025/400/400",
+    "category": "Deportes",
+    "stock": 62,
+    "rating": 4.3
+  },
+  {
+    "id": "p026",
+    "name": "Mochila deportiva 25L",
+    "description": "Compartimento para laptop, resistente al agua.",
+    "price": 39.99,
+    "imageUrl": "https://picsum.photos/seed/p026/400/400",
+    "category": "Deportes",
+    "stock": 25,
+    "rating": 4.4
+  },
+  {
+    "id": "p027",
+    "name": "Balón de fútbol tamaño 5",
+    "description": "Costura termosellada, uso profesional.",
+    "price": 27.0,
+    "imageUrl": "https://picsum.photos/seed/p027/400/400",
+    "category": "Deportes",
+    "stock": 30,
+    "rating": 4.5
+  },
+  {
+    "id": "p028",
+    "name": "Serum facial vitamina C",
+    "description": "30ml, antioxidante, ilumina el rostro.",
+    "price": 18.99,
+    "imageUrl": "https://picsum.photos/seed/p028/400/400",
+    "category": "Belleza",
+    "stock": 44,
+    "rating": 4.6
+  },
+  {
+    "id": "p029",
+    "name": "Crema hidratante facial SPF30",
+    "description": "Protección solar diaria, no grasosa.",
+    "price": 21.5,
+    "imageUrl": "https://picsum.photos/seed/p029/400/400",
+    "category": "Belleza",
+    "stock": 38,
+    "rating": 4.4
+  },
+  {
+    "id": "p030",
+    "name": "Set de brochas de maquillaje (12 pzas)",
+    "description": "Cerdas sintéticas suaves, estuche incluido.",
+    "price": 24.0,
+    "imageUrl": "https://picsum.photos/seed/p030/400/400",
+    "category": "Belleza",
+    "stock": 29,
+    "rating": 4.2
+  },
+  {
+    "id": "p031",
+    "name": "Secador de pelo iónico 2200W",
+    "description": "Reduce el frizz, 3 niveles de temperatura.",
+    "price": 45.0,
+    "imageUrl": "https://picsum.photos/seed/p031/400/400",
+    "category": "Belleza",
+    "stock": 16,
+    "rating": 4.3
+  },
+  {
+    "id": "p032",
+    "name": "Perfume floral 50ml",
+    "description": "Notas de jazmín y vainilla, larga duración.",
+    "price": 32.99,
+    "imageUrl": "https://picsum.photos/seed/p032/400/400",
+    "category": "Belleza",
+    "stock": 20,
+    "rating": 4.5
+  },
+  {
+    "id": "p033",
+    "name": "Mascarilla capilar reparadora 250ml",
+    "description": "Nutre cabello dañado, con keratina.",
+    "price": 14.5,
+    "imageUrl": "https://picsum.photos/seed/p033/400/400",
+    "category": "Belleza",
+    "stock": 34,
+    "rating": 4.1
+  },
+  {
+    "id": "p034",
+    "name": "Café orgánico en grano 500g",
+    "description": "Tueste medio, origen andino.",
+    "price": 12.99,
+    "imageUrl": "https://picsum.photos/seed/p034/400/400",
+    "category": "Alimentos",
+    "stock": 50,
+    "rating": 4.7
+  },
+  {
+    "id": "p035",
+    "name": "Mix de frutos secos 400g",
+    "description": "Almendras, nueces y pasas sin sal.",
+    "price": 9.99,
+    "imageUrl": "https://picsum.photos/seed/p035/400/400",
+    "category": "Alimentos",
+    "stock": 65,
+    "rating": 4.4
+  },
+  {
+    "id": "p036",
+    "name": "Miel de abeja pura 500ml",
+    "description": "100% natural, sin aditivos.",
+    "price": 11.5,
+    "imageUrl": "https://picsum.photos/seed/p036/400/400",
+    "category": "Alimentos",
+    "stock": 42,
+    "rating": 4.6
+  },
+  {
+    "id": "p037",
+    "name": "Proteína en polvo sabor chocolate 1kg",
+    "description": "24g de proteína por porción, sin gluten.",
+    "price": 34.99,
+    "imageUrl": "https://picsum.photos/seed/p037/400/400",
+    "category": "Alimentos",
+    "stock": 28,
+    "rating": 4.3
+  },
+  {
+    "id": "p038",
+    "name": "Aceite de oliva extra virgen 750ml",
+    "description": "Primera prensada en frío.",
+    "price": 15.0,
+    "imageUrl": "https://picsum.photos/seed/p038/400/400",
+    "category": "Alimentos",
+    "stock": 39,
+    "rating": 4.5
+  },
+  {
+    "id": "p039",
+    "name": "Novela: El jardín de las voces",
+    "description": "Ficción contemporánea, tapa blanda.",
+    "price": 14.99,
+    "imageUrl": "https://picsum.photos/seed/p039/400/400",
+    "category": "Libros",
+    "stock": 23,
+    "rating": 4.4
+  },
+  {
+    "id": "p040",
+    "name": "Manual de programación con Dart",
+    "description": "Guía práctica para desarrollo móvil.",
+    "price": 29.99,
+    "imageUrl": "https://picsum.photos/seed/p040/400/400",
+    "category": "Libros",
+    "stock": 17,
+    "rating": 4.6
+  },
+  {
+    "id": "p041",
+    "name": "Agenda anual sin fechas",
+    "description": "Tapa dura, papel reciclado, elástico de cierre.",
+    "price": 13.5,
+    "imageUrl": "https://picsum.photos/seed/p041/400/400",
+    "category": "Libros",
+    "stock": 36,
+    "rating": 4.2
+  },
+  {
+    "id": "p042",
+    "name": "Libro de recetas saludables",
+    "description": "80 recetas fáciles con ingredientes locales.",
+    "price": 18.0,
+    "imageUrl": "https://picsum.photos/seed/p042/400/400",
+    "category": "Libros",
+    "stock": 19,
+    "rating": 4.3
+  },
+  {
+    "id": "p043",
+    "name": "Set de bloques de construcción (300 pzas)",
+    "description": "Compatible con marcas estándar, +6 años.",
+    "price": 27.99,
+    "imageUrl": "https://picsum.photos/seed/p043/400/400",
+    "category": "Juguetes",
+    "stock": 31,
+    "rating": 4.7
+  },
+  {
+    "id": "p044",
+    "name": "Rompecabezas 1000 piezas paisaje",
+    "description": "Cartón grueso, imagen de alta resolución.",
+    "price": 16.5,
+    "imageUrl": "https://picsum.photos/seed/p044/400/400",
+    "category": "Juguetes",
+    "stock": 24,
+    "rating": 4.4
+  },
+  {
+    "id": "p045",
+    "name": "Peluche oso 30cm",
+    "description": "Material hipoalergénico, apto desde recién nacido.",
+    "price": 12.0,
+    "imageUrl": "https://picsum.photos/seed/p045/400/400",
+    "category": "Juguetes",
+    "stock": 41,
+    "rating": 4.5
+  },
+  {
+    "id": "p046",
+    "name": "Drone mini con cámara HD",
+    "description": "Control por app, 15 min de vuelo.",
+    "price": 54.99,
+    "imageUrl": "https://picsum.photos/seed/p046/400/400",
+    "category": "Juguetes",
+    "stock": 12,
+    "rating": 4.2
+  },
+  {
+    "id": "p047",
+    "name": "Kit de pintura para niños",
+    "description": "Acuarelas, pinceles y lienzo incluidos.",
+    "price": 15.99,
+    "imageUrl": "https://picsum.photos/seed/p047/400/400",
+    "category": "Juguetes",
+    "stock": 28,
+    "rating": 4.3
+  },
+  {
+    "id": "p048",
+    "name": "Auto a control remoto todo terreno",
+    "description": "Batería recargable, escala 1:18.",
+    "price": 32.5,
+    "imageUrl": "https://picsum.photos/seed/p048/400/400",
+    "category": "Juguetes",
+    "stock": 20,
+    "rating": 4.4
+  },
+  {
+    "id": "p049",
+    "name": "Juego de mesa familiar de estrategia",
+    "description": "2-6 jugadores, partidas de 45 min.",
+    "price": 24.99,
+    "imageUrl": "https://picsum.photos/seed/p049/400/400",
+    "category": "Juguetes",
+    "stock": 22,
+    "rating": 4.6
+  },
+  {
+    "id": "p050",
+    "name": "Patineta infantil ajustable",
+    "description": "3 alturas de manubrio, ruedas LED.",
+    "price": 44.0,
+    "imageUrl": "https://picsum.photos/seed/p050/400/400",
+    "category": "Juguetes",
+    "stock": 14,
+    "rating": 4.5
+  }
+]
