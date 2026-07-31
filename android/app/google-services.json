@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "256790647633",
+    "project_id": "basketapp-34b70",
+    "storage_bucket": "basketapp-34b70.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256790647633:android:5698f93af4edb8a04ff970",
+        "android_client_info": {
+          "package_name": "dev.axlod.basketapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256790647633-kr34m3g3fpfl762br0nhbsrj5gu6nl5p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArnHmRWNFqfvyt0JGs-u1-qOv4kF6_j7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "256790647633-kr34m3g3fpfl762br0nhbsrj5gu6nl5p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
