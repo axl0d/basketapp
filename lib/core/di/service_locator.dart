@@ -1,6 +1,7 @@
 import 'package:basketapp/core/notifications/bloc/notification_bloc.dart';
 import 'package:basketapp/core/notifications/notification_service.dart';
 import 'package:basketapp/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:dio/dio.dart';
 import 'package:basketapp/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:basketapp/features/auth/domain/repositories/auth_repository.dart';
 import 'package:basketapp/features/auth/domain/usecases/get_current_user_usecase.dart';
@@ -47,6 +48,10 @@ import 'package:get_it/get_it.dart';
 final getIt = GetIt.instance;
 
 Future<void> setupServiceLocator() async {
+  // HTTP Client
+  final dio = Dio();
+  getIt.registerSingleton<Dio>(dio);
+
   // Firebase
   final firebaseAuth = firebase_auth.FirebaseAuth.instance;
   getIt.registerSingleton<firebase_auth.FirebaseAuth>(firebaseAuth);
@@ -73,7 +78,7 @@ Future<void> setupServiceLocator() async {
     AuthRemoteDataSourceImpl(getIt<firebase_auth.FirebaseAuth>()),
   );
   getIt.registerSingleton<ProductRemoteDataSource>(
-    ProductRemoteDataSourceImpl(),
+    ProductRemoteDataSourceImpl(dio: getIt<Dio>()),
   );
   getIt.registerSingleton<ProductLocalDataSource>(ProductLocalDataSourceImpl());
 
