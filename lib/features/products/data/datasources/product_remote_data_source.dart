@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:basketapp/features/products/data/models/product_model.dart';
 import 'package:dio/dio.dart';
 
@@ -17,9 +19,8 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   Future<List<ProductModel>> getProducts() async {
     try {
       final response = await dio.get(url);
-
+      final jsonData = jsonDecode(response.data) as List<dynamic>;
       if (response.statusCode == 200) {
-        final List<dynamic> jsonData = response.data;
         return jsonData
             .map((json) => ProductModel.fromJson(json as Map<String, dynamic>))
             .toList();
