@@ -14,14 +14,14 @@ class ProductModel extends Product {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      id: json['id'] ?? '',
-      name: json['name'] ?? '',
-      description: json['description'] ?? '',
-      price: (json['price'] ?? 0.0).toDouble(),
-      imageUrl: json['imageUrl'] ?? '',
-      category: json['category'] ?? '',
-      stock: json['stock'] ?? 0,
-      rating: (json['rating'] ?? 0.0).toDouble(),
+      id: json['id'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      price: json['price'] as double? ?? 0.0,
+      imageUrl: json['imageUrl'] as String? ?? '',
+      category: json['category'] as String? ?? '',
+      stock: json['stock'] as int? ?? 0,
+      rating: json['rating'] as double? ?? 0.0,
     );
   }
 

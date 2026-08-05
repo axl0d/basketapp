@@ -1,7 +1,5 @@
-import 'package:basketapp/core/database/hive_config.dart';
 import 'package:basketapp/core/di/service_locator.dart';
 import 'package:basketapp/core/notifications/bloc/notification_bloc.dart';
-import 'package:basketapp/core/notifications/bloc/notification_event.dart';
 import 'package:basketapp/core/theme/app_theme.dart';
 import 'package:basketapp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:basketapp/features/auth/presentation/pages/login_page.dart';
@@ -10,24 +8,11 @@ import 'package:basketapp/features/auth/presentation/pages/splash_page.dart';
 import 'package:basketapp/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:basketapp/features/home/presentation/pages/home_page.dart';
 import 'package:basketapp/features/products/presentation/screens/product_detail_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  await initHive();
-  await setupServiceLocator();
-
-  final notificationBloc = getIt<NotificationBloc>();
-  notificationBloc.add(const InitializeNotificationsEvent());
-
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +20,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(create: (context) => getIt<AuthBloc>()),
         BlocProvider<CartBloc>(create: (context) => getIt<CartBloc>()),
-        BlocProvider<NotificationBloc>(create: (context) => getIt<NotificationBloc>()),
+        BlocProvider<NotificationBloc>(
+          create: (context) => getIt<NotificationBloc>(),
+        ),
       ],
       child: MaterialApp(
         title: 'BasketApp',
@@ -52,9 +39,10 @@ class MyApp extends StatelessWidget {
             case '/home':
               return MaterialPageRoute(builder: (_) => const HomePage());
             case '/product':
-              final productId = settings.arguments as String;
+              final productId = settings.arguments as String?;
               return MaterialPageRoute(
-                builder: (_) => ProductDetailScreen(productId: productId),
+                builder: (_) =>
+                    ProductDetailScreen(productId: productId ?? '1'),
               );
             default:
               return null;

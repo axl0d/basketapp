@@ -11,15 +11,15 @@ abstract class ProductRemoteDataSource {
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
-  final Dio dio;
+  const ProductRemoteDataSourceImpl({required this.dio});
 
-  ProductRemoteDataSourceImpl({required this.dio});
+  final Dio dio;
 
   @override
   Future<List<ProductModel>> getProducts() async {
     try {
       final response = await dio.get(url);
-      final jsonData = jsonDecode(response.data) as List<dynamic>;
+      final jsonData = jsonDecode(response.data as String) as List<dynamic>;
       if (response.statusCode == 200) {
         return jsonData
             .map((json) => ProductModel.fromJson(json as Map<String, dynamic>))

@@ -1,14 +1,15 @@
 import 'package:basketapp/features/auth/domain/entities/user.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class UserModel extends User {
   const UserModel({
     required super.id,
     required super.email,
-    super.displayName,
     required super.emailVerified,
+    super.displayName,
   });
 
-  factory UserModel.fromFirebaseUser(dynamic firebaseUser) {
+  factory UserModel.fromFirebaseUser(firebase_auth.User firebaseUser) {
     return UserModel(
       id: firebaseUser.uid,
       email: firebaseUser.email ?? '',

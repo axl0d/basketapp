@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -135,12 +137,14 @@ class NotificationService {
         print('Payload: ${message.data}');
       }
 
-      final orderId = payload['orderId'] ?? '';
-      final orderStatus = payload['orderStatus'] ?? '';
+      final orderId = payload['orderId'] as String? ?? '';
+      final orderStatus = payload['orderStatus'] as String? ?? '';
 
-      showLocalNotification(
-        title: notification.title ?? 'Notificación',
-        body: notification.body ?? '',
+      unawaited(
+        showLocalNotification(
+          title: notification.title ?? 'Notificación',
+          body: notification.body ?? '',
+        ),
       );
 
       onForegroundMessage?.call(
@@ -159,9 +163,9 @@ class NotificationService {
 
     final notification = message.notification;
     if (notification != null) {
-      final payload = message.data['payload'];
-      final orderId = payload?['orderId'] ?? '';
-      final orderStatus = payload?['orderStatus'] ?? '';
+      final payload = message.data['payload'] as Map<String, dynamic>?;
+      final orderId = payload?['orderId'] as String? ?? '';
+      final orderStatus = payload?['orderStatus'] as String? ?? '';
 
       onBackgroundMessage?.call(
         notification.title ?? 'Notificación',
@@ -179,9 +183,9 @@ class NotificationService {
 
     final notification = message.notification;
     if (notification != null) {
-      final payload = message.data['payload'];
-      final orderId = payload?['orderId'] ?? '';
-      final orderStatus = payload?['orderStatus'] ?? '';
+      final payload = message.data['payload'] as Map<String, dynamic>?;
+      final orderId = payload?['orderId'] as String? ?? '';
+      final orderStatus = payload?['orderStatus'] as String? ?? '';
 
       onTerminatedMessage?.call(
         notification.title ?? 'Notificación',
