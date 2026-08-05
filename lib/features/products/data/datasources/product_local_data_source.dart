@@ -1,27 +1,21 @@
-import 'package:basketapp/dumb/products.dart';
 import 'package:basketapp/features/products/data/models/product_model.dart';
 
 abstract class ProductLocalDataSource {
   Future<ProductModel> updateProductRating(String productId, double rating);
+
   Future<ProductModel?> getProductFromCache(String productId);
+
+  void saveProductsToCache(List<ProductModel> products);
 }
 
 class ProductLocalDataSourceImpl implements ProductLocalDataSource {
   final Map<String, ProductModel> _productCache = {};
 
-  Future<void> _loadProductsToCache() async {
-    if (_productCache.isEmpty) {
-      for (final json in mockProducts) {
-        final product = ProductModel.fromJson(json);
-        _productCache[product.id] = product;
-      }
-    }
-  }
-
   @override
-  Future<ProductModel> updateProductRating(String productId, double rating) async {
-    await _loadProductsToCache();
-
+  Future<ProductModel> updateProductRating(
+    String productId,
+    double rating,
+  ) async {
     final product = _productCache[productId];
     if (product == null) {
       throw Exception('Producto no encontrado');
@@ -44,8 +38,14 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
   }
 
   @override
+  Future<void> saveProductsToCache(List<ProductModel> products) async {
+    for (final product in products) {
+      _productCache[product.id] = product;
+    }
+  }
+
+  @override
   Future<ProductModel?> getProductFromCache(String productId) async {
-    await _loadProductsToCache();
     return _productCache[productId];
   }
 }

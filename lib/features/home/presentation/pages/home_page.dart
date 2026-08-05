@@ -68,7 +68,14 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: BlocProvider.value(
                     value: _productsBloc,
-                    child: BlocBuilder<ProductsBloc, ProductsState>(
+                    child: BlocConsumer<ProductsBloc, ProductsState>(
+                      listener: (context, state) {
+                        if (state is ProductsLoaded) {
+                          _productsBloc.add(
+                            SaveLoadedProductsEvent(state.products),
+                          );
+                        }
+                      },
                       builder: (context, productsState) {
                         if (productsState is ProductsLoading) {
                           return const Center(

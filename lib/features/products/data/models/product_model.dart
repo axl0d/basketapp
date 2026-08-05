@@ -38,3 +38,16 @@ class ProductModel extends Product {
     };
   }
 }
+
+extension ProductModelExtensions on Product {
+  ProductModel toModel() => ProductModel(
+    id: id,
+    name: name,
+    description: description,
+    price: price,
+    imageUrl: imageUrl,
+    category: category,
+    stock: stock,
+    rating: rating,
+  );
+}

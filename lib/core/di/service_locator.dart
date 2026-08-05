@@ -1,7 +1,6 @@
 import 'package:basketapp/core/notifications/bloc/notification_bloc.dart';
 import 'package:basketapp/core/notifications/notification_service.dart';
 import 'package:basketapp/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:dio/dio.dart';
 import 'package:basketapp/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:basketapp/features/auth/domain/repositories/auth_repository.dart';
 import 'package:basketapp/features/auth/domain/usecases/get_current_user_usecase.dart';
@@ -38,8 +37,10 @@ import 'package:basketapp/features/products/domain/repositories/product_reposito
 import 'package:basketapp/features/products/domain/usecases/get_product_by_id_usecase.dart';
 import 'package:basketapp/features/products/domain/usecases/get_products_usecase.dart';
 import 'package:basketapp/features/products/domain/usecases/rate_product_usecase.dart';
+import 'package:basketapp/features/products/domain/usecases/save_products_usecase.dart';
 import 'package:basketapp/features/products/presentation/bloc/product_detail_bloc.dart';
 import 'package:basketapp/features/products/presentation/bloc/products_bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -96,7 +97,9 @@ Future<void> setupServiceLocator() async {
     ),
   );
   getIt.registerSingleton<CartRepository>(CartRepositoryImpl());
-  getIt.registerSingleton<PaymentMethodRepository>(PaymentMethodRepositoryHive());
+  getIt.registerSingleton<PaymentMethodRepository>(
+    PaymentMethodRepositoryHive(),
+  );
   getIt.registerSingleton<OrderRepository>(OrderRepositoryHive());
 
   // Use Cases
@@ -115,6 +118,9 @@ Future<void> setupServiceLocator() async {
   );
   getIt.registerSingleton<GetProductByIdUseCase>(
     GetProductByIdUseCase(getIt<ProductRepository>()),
+  );
+  getIt.registerSingleton<SaveProductsUseCase>(
+    SaveProductsUseCase(getIt<ProductRepository>()),
   );
   getIt.registerSingleton<RateProductUseCase>(
     RateProductUseCase(getIt<ProductRepository>()),
@@ -166,7 +172,10 @@ Future<void> setupServiceLocator() async {
     ),
   );
   getIt.registerSingleton<ProductsBloc>(
-    ProductsBloc(getProductsUseCase: getIt<GetProductsUseCase>()),
+    ProductsBloc(
+      getProductsUseCase: getIt<GetProductsUseCase>(),
+      saveProductsUseCase: getIt<SaveProductsUseCase>(),
+    ),
   );
   getIt.registerSingleton<ProductDetailBloc>(
     ProductDetailBloc(
