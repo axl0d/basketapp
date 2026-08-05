@@ -37,7 +37,7 @@ dependencies:
   equatable: ^2.0.5
 
   # Connectivity
-  connectivity_plus: ^6.0.0
+  connectivity_plus: ^7.3.1
 
   # Storage (optional, para future features)
   shared_preferences: ^2.2.2
